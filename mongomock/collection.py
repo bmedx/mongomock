@@ -88,6 +88,8 @@ def validate_ok_for_update(update):
 
 def validate_write_concern_params(**params):
     if params:
+        if 'safe' in params:
+            del params['safe']
         WriteConcern(**params)
 
 
@@ -361,6 +363,7 @@ class Collection(object):
                 to_insert = dict(spec, _id=_id) if _id else spec
                 to_insert = self._expand_dots(to_insert)
                 upserted_id = self._insert(self._discard_operators(to_insert))
+                upserted_id = helpers.hashdict(upserted_id)
                 existing_document = self._documents[upserted_id]
                 was_insert = True
             else:
