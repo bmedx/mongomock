@@ -240,7 +240,7 @@ class Collection(object):
     def __init__(self, db, name):
         self.name = name
         self.full_name = "{0}.{1}".format(db.name, name)
-        self._database = db
+        self.database = self._database = db
         self._documents = OrderedDict()
         self._uniques = []
 
